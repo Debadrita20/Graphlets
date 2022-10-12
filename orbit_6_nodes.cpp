@@ -126,14 +126,1148 @@ void countnode6orbits()
 		for(int nx1=0;nx1<deg[x];nx1++)
 		{
 			int a=adj[x][nx1];
+			for(int nx6=0;nx6<deg[x];nx6++)
+			{
+				int b=adj[x][nx6];
+				if(b==a) continue;
+				for(int nx7=0;nx7<deg[x];nx7++)
+				{
+					int c=adj[x][nx7];
+					if(c==b||c==a) continue;
+					for(int nx8=0;nx8<deg[x];nx8++)
+					{
+						int d=adj[x][nx8];
+						if(d==a||d==b||d==c) continue;
+						if((!adjacent(d,a))&&(!adjacent(d,b))&&(!adjacent(d,c))&&(!adjacent(a,b))&&(!adjacent(a,c))&&(!adjacent(b,c)))  //p23
+						{
+							rhs[1]+=(deg[x]-4);
+							rhs[5]+=(deg[a]-1+deg[b]-1+deg[c]-1+deg[d]-1);
+							rhs[8]+=(tri[x][a]+tri[x][b]+tri[x][c]+tri[x][d]);
+							rhs[24]+=(tri[a][b]-1+tri[a][c]-1+tri[b][c]-1+tri[a][d]-1+tri[b][d]-1+tri[c][d]-1);
+							rhs[28]+=(common3[TRIPLE(x,a,b)]+common3[TRIPLE(x,a,c)]+common3[TRIPLE(x,b,c)]+common3[TRIPLE(x,a,d)]+common3[TRIPLE(x,b,d)]+common3[TRIPLE(x,c,d)]);
+							rhs[84]+=(common3[TRIPLE(a,b,c)]-1+common3[TRIPLE(a,b,d)]-1+common3[TRIPLE(a,c,d)]-1+common3[TRIPLE(b,c,d)]-1);
+							vector<int> commxb;
+						for(int nx2=0,nb2=0;nx2<deg[x]&&nb2<deg[b];)
+						{
+							if(adj[x][nx2]==adj[b][nb2])
+							{
+                                commxb.push_back(adj[x][nx2]);
+								nx2++;
+								nb2++;
+							}
+							else if(adj[x][nx2]<adj[b][nb2])
+							nx2++;
+							else
+							nb2++;
+						}
+						vector<int> commbc;
+						for(int nb2=0,nc2=0;nb2<deg[b]&&nc2<deg[c];)
+						{
+							if(adj[b][nb2]==adj[c][nc2])
+							{
+                                commbc.push_back(adj[b][nb2]);
+								nb2++;
+								nc2++;
+							}
+							else if(adj[b][nb2]<adj[c][nc2])
+							nb2++;
+							else
+							nc2++;
+						}
+						vector<int> commxd;
+						for(int nx2=0,nd2=0;nx2<deg[x]&&nd2<deg[d];)
+						{
+							if(adj[x][nx2]==adj[d][nd2])
+							{
+                                commxd.push_back(adj[x][nx2]);
+								nx2++;
+								nd2++;
+							}
+							else if(adj[x][nx2]<adj[d][nd2])
+							nx2++;
+							else
+							nd2++;
+						}
+						vector<int> commac;
+						for(int na2=0,nc2=0;na2<deg[a]&&nc2<deg[c];)
+						{
+							if(adj[a][na2]==adj[c][nc2])
+							{
+                                commac.push_back(adj[a][na2]);
+								na2++;
+								nc2++;
+							}
+							else if(adj[a][na2]<adj[c][nc2])
+							na2++;
+							else
+							nc2++;
+						}
+						vector<int> commad;
+						for(int na2=0,nd2=0;na2<deg[a]&&nd2<deg[d];)
+						{
+							if(adj[a][na2]==adj[d][nd2])
+							{
+                                commad.push_back(adj[a][na2]);
+								na2++;
+								nd2++;
+							}
+							else if(adj[a][na2]<adj[d][nd2])
+							na2++;
+							else
+							nd2++;
+						}
+						for(int v:commxb)
+						{
+							if(find(commac.begin(),commac.end(),v)!=commac.end())
+							{
+								rhs[88]++;
+							}
+							if(find(commad.begin(),commad.end(),v)!=commad.end())
+							{
+								rhs[88]++;
+							}
+						}
+						for(int v:commxd)
+						{
+							if(find(commac.begin(),commac.end(),v)!=commac.end())
+							{
+								rhs[88]++;
+							}
+							if(find(commbc.begin(),commbc.end(),v)!=commbc.end())
+							{
+								rhs[88]++;
+							}
+						}
+						for(int v:commad)
+						{
+							if(find(commbc.begin(),commbc.end(),v)!=commbc.end())
+							{
+								rhs[213]++;
+							}
+						}
+						rhs[213]--;
+						}
+						else if((adjacent(d,a))&&(!adjacent(d,b))&&(!adjacent(d,c))&&(!adjacent(a,b))&&(!adjacent(a,c))&&(!adjacent(b,c)))  //p33
+						{
+							rhs[39]+=common3[TRIPLE(x,a,d)];
+						}
+						else if((adjacent(d,a))&&(adjacent(d,b))&&(!adjacent(d,c))&&(!adjacent(a,b))&&(!adjacent(a,c))&&(!adjacent(b,c)))  //p42
+						{
+							rhs[105]+=(tri[x][a]-1+tri[x][b]-1);
+							rhs[137]+=(common3[TRIPLE(x,a,d)]+common3[TRIPLE(x,b,d)]);
+							rhs[164]+=(tri[a][b]-2);
+							rhs[183]+=(common3[TRIPLE(x,a,b)]-1);
+							rhs[223]+=tri[x][c];
+							rhs[239]+=common3[TRIPLE(x,c,d)];
+							rhs[268]+=(common3[TRIPLE(x,a,c)]+common3[TRIPLE(x,b,c)]);
+							vector<int> commxb;
+						for(int nx2=0,nb2=0;nx2<deg[x]&&nb2<deg[b];)
+						{
+							if(adj[x][nx2]==adj[b][nb2])
+							{
+                                commxb.push_back(adj[x][nx2]);
+								nx2++;
+								nb2++;
+							}
+							else if(adj[x][nx2]<adj[b][nb2])
+							nx2++;
+							else
+							nb2++;
+						}
+						vector<int> commbc;
+						for(int nb2=0,nc2=0;nb2<deg[b]&&nc2<deg[c];)
+						{
+							if(adj[b][nb2]==adj[c][nc2])
+							{
+                                commbc.push_back(adj[b][nb2]);
+								nb2++;
+								nc2++;
+							}
+							else if(adj[b][nb2]<adj[c][nc2])
+							nb2++;
+							else
+							nc2++;
+						}
+						vector<int> commxd;
+						for(int nx2=0,nd2=0;nx2<deg[x]&&nd2<deg[d];)
+						{
+							if(adj[x][nx2]==adj[d][nd2])
+							{
+                                commxd.push_back(adj[x][nx2]);
+								nx2++;
+								nd2++;
+							}
+							else if(adj[x][nx2]<adj[d][nd2])
+							nx2++;
+							else
+							nd2++;
+						}
+						vector<int> commac;
+						for(int na2=0,nc2=0;na2<deg[a]&&nc2<deg[c];)
+						{
+							if(adj[a][na2]==adj[c][nc2])
+							{
+                                commac.push_back(adj[a][na2]);
+								na2++;
+								nc2++;
+							}
+							else if(adj[a][na2]<adj[c][nc2])
+							na2++;
+							else
+							nc2++;
+						}
+						vector<int> commad;
+						for(int na2=0,nd2=0;na2<deg[a]&&nd2<deg[d];)
+						{
+							if(adj[a][na2]==adj[d][nd2])
+							{
+                                commad.push_back(adj[a][na2]);
+								na2++;
+								nd2++;
+							}
+							else if(adj[a][na2]<adj[d][nd2])
+							na2++;
+							else
+							nd2++;
+						}
+						for(int v:commxb)
+						{
+							if(find(commac.begin(),commac.end(),v)!=commac.end())
+							{
+								rhs[298]++;
+							}
+							if(find(commad.begin(),commad.end(),v)!=commad.end())
+							{
+								rhs[196]++;
+							}
+						}
+						for(int v:commxd)
+						{
+							if(find(commac.begin(),commac.end(),v)!=commac.end())
+							{
+								rhs[282]++;
+							}
+							if(find(commbc.begin(),commbc.end(),v)!=commbc.end())
+							{
+								rhs[282]++;
+							}
+						}
+						}
+						else if((!adjacent(d,a))&&(adjacent(d,b))&&(!adjacent(d,c))&&(!adjacent(a,b))&&(adjacent(a,c))&&(!adjacent(b,c)))  //p44
+						{
+							rhs[91]+=(deg[x]-4);
+							rhs[114]+=(deg[a]-2+deg[b]-2+deg[c]-2+deg[d]-2);
+							rhs[322]+=(common3[TRIPLE(x,a,c)]+common3[TRIPLE(x,b,d)]);
+							vector<int> commxb;
+						for(int nx2=0,nb2=0;nx2<deg[x]&&nb2<deg[b];)
+						{
+							if(adj[x][nx2]==adj[b][nb2])
+							{
+                                commxb.push_back(adj[x][nx2]);
+								nx2++;
+								nb2++;
+							}
+							else if(adj[x][nx2]<adj[b][nb2])
+							nx2++;
+							else
+							nb2++;
+						}
+						vector<int> commbc;
+						for(int nb2=0,nc2=0;nb2<deg[b]&&nc2<deg[c];)
+						{
+							if(adj[b][nb2]==adj[c][nc2])
+							{
+                                commbc.push_back(adj[b][nb2]);
+								nb2++;
+								nc2++;
+							}
+							else if(adj[b][nb2]<adj[c][nc2])
+							nb2++;
+							else
+							nc2++;
+						}
+						vector<int> commxd;
+						for(int nx2=0,nd2=0;nx2<deg[x]&&nd2<deg[d];)
+						{
+							if(adj[x][nx2]==adj[d][nd2])
+							{
+                                commxd.push_back(adj[x][nx2]);
+								nx2++;
+								nd2++;
+							}
+							else if(adj[x][nx2]<adj[d][nd2])
+							nx2++;
+							else
+							nd2++;
+						}
+						vector<int> commac;
+						for(int na2=0,nc2=0;na2<deg[a]&&nc2<deg[c];)
+						{
+							if(adj[a][na2]==adj[c][nc2])
+							{
+                                commac.push_back(adj[a][na2]);
+								na2++;
+								nc2++;
+							}
+							else if(adj[a][na2]<adj[c][nc2])
+							na2++;
+							else
+							nc2++;
+						}
+						vector<int> commad;
+						for(int na2=0,nd2=0;na2<deg[a]&&nd2<deg[d];)
+						{
+							if(adj[a][na2]==adj[d][nd2])
+							{
+                                commad.push_back(adj[a][na2]);
+								na2++;
+								nd2++;
+							}
+							else if(adj[a][na2]<adj[d][nd2])
+							na2++;
+							else
+							nd2++;
+						}
+						for(int v:commxb)
+						{
+							if(find(commac.begin(),commac.end(),v)!=commac.end())
+							{
+								rhs[338]++;
+							}
+							if(find(commad.begin(),commad.end(),v)!=commad.end())
+							{
+								rhs[338]++;
+							}
+						}
+						for(int v:commxd)
+						{
+							if(find(commac.begin(),commac.end(),v)!=commac.end())
+							{
+								rhs[338]++;
+							}
+							if(find(commbc.begin(),commbc.end(),v)!=commbc.end())
+							{
+								rhs[338]++;
+							}
+						}
+						for(int v:commad)
+						{
+							if(find(commbc.begin(),commbc.end(),v)!=commbc.end())
+							{
+								rhs[373]++;
+							}
+						}
+						rhs[373]--;
+						}
+						else if((adjacent(d,a))&&(adjacent(d,b))&&(adjacent(d,c))&&(!adjacent(a,b))&&(!adjacent(a,c))&&(!adjacent(b,c)))  //p55
+						{
+							rhs[215]+=(tri[x][d]-3);
+						}
+						else if((adjacent(d,a))&&(!adjacent(d,b))&&(adjacent(d,c))&&(!adjacent(a,b))&&(adjacent(a,c))&&(!adjacent(b,c)))  //p58
+						{
+                            vector<int> commxd;
+						for(int nx2=0,nd2=0;nx2<deg[x]&&nd2<deg[d];)
+						{
+							if(adj[x][nx2]==adj[d][nd2])
+							{
+                                commxd.push_back(adj[x][nx2]);
+								nx2++;
+								nd2++;
+							}
+							else if(adj[x][nx2]<adj[d][nd2])
+							nx2++;
+							else
+							nd2++;
+						}
+						vector<int> commac;
+						for(int na2=0,nc2=0;na2<deg[a]&&nc2<deg[c];)
+						{
+							if(adj[a][na2]==adj[c][nc2])
+							{
+                                commac.push_back(adj[a][na2]);
+								na2++;
+								nc2++;
+							}
+							else if(adj[a][na2]<adj[c][nc2])
+							na2++;
+							else
+							nc2++;
+						}
+							for(int v:commxd)
+						{
+							if(find(commac.begin(),commac.end(),v)!=commac.end())
+							{
+								rhs[211]++;
+							}
+						}
+						}
+						else if((adjacent(d,a))&&(adjacent(d,b))&&(!adjacent(d,c))&&(!adjacent(a,b))&&(adjacent(a,c))&&(!adjacent(b,c)))  //p61
+						{
+							rhs[377]+=common3[TRIPLE(x,b,c)];
+						}
+						else if((adjacent(d,a))&&(adjacent(d,b))&&(adjacent(d,c))&&(!adjacent(a,b))&&(adjacent(a,c))&&(!adjacent(b,c)))  //p67
+						{
+							rhs[245]+=(tri[x][d]-3);
+							rhs[306]+=(common3[TRIPLE(x,a,d)]-1+common3[TRIPLE(x,c,d)]-1);
+							rhs[336]+=(tri[b][d]-1);
+							rhs[355]+=(common3[TRIPLE(a,c,d)]-1);
+							rhs[356]+=(common3[TRIPLE(x,a,c)]-1);
+							rhs[375]+=common3[TRIPLE(x,b,d)];
+							rhs[384]+=(common3[TRIPLE(a,b,d)]-1+common3[TRIPLE(b,c,d)]-1);
+							rhs[385]+=(common3[TRIPLE(x,a,b)]-1+common3[TRIPLE(x,b,c)]-1);
+							rhs[393]+=(common3[TRIPLE(a,b,c)]-2);
+							vector<int> commxb;
+						for(int nx2=0,nb2=0;nx2<deg[x]&&nb2<deg[b];)
+						{
+							if(adj[x][nx2]==adj[b][nb2])
+							{
+                                commxb.push_back(adj[x][nx2]);
+								nx2++;
+								nb2++;
+							}
+							else if(adj[x][nx2]<adj[b][nb2])
+							nx2++;
+							else
+							nb2++;
+						}
+						vector<int> commbc;
+						for(int nb2=0,nc2=0;nb2<deg[b]&&nc2<deg[c];)
+						{
+							if(adj[b][nb2]==adj[c][nc2])
+							{
+                                commbc.push_back(adj[b][nb2]);
+								nb2++;
+								nc2++;
+							}
+							else if(adj[b][nb2]<adj[c][nc2])
+							nb2++;
+							else
+							nc2++;
+						}
+						vector<int> commxd;
+						for(int nx2=0,nd2=0;nx2<deg[x]&&nd2<deg[d];)
+						{
+							if(adj[x][nx2]==adj[d][nd2])
+							{
+                                commxd.push_back(adj[x][nx2]);
+								nx2++;
+								nd2++;
+							}
+							else if(adj[x][nx2]<adj[d][nd2])
+							nx2++;
+							else
+							nd2++;
+						}
+						vector<int> commac;
+						for(int na2=0,nc2=0;na2<deg[a]&&nc2<deg[c];)
+						{
+							if(adj[a][na2]==adj[c][nc2])
+							{
+                                commac.push_back(adj[a][na2]);
+								na2++;
+								nc2++;
+							}
+							else if(adj[a][na2]<adj[c][nc2])
+							na2++;
+							else
+							nc2++;
+						}
+						vector<int> commad;
+						for(int na2=0,nd2=0;na2<deg[a]&&nd2<deg[d];)
+						{
+							if(adj[a][na2]==adj[d][nd2])
+							{
+                                commad.push_back(adj[a][na2]);
+								na2++;
+								nd2++;
+							}
+							else if(adj[a][na2]<adj[d][nd2])
+							na2++;
+							else
+							nd2++;
+						}
+						for(int v:commxb)
+						{
+							if(find(commac.begin(),commac.end(),v)!=commac.end())
+							{
+								rhs[397]++;
+							}
+							if(find(commad.begin(),commad.end(),v)!=commad.end())
+							{
+								rhs[391]++;
+							}
+						}
+						rhs[397]--;
+						for(int v:commxd)
+						{
+							if(find(commac.begin(),commac.end(),v)!=commac.end())
+							{
+								rhs[362]++;
+							}
+							if(find(commbc.begin(),commbc.end(),v)!=commbc.end())
+							{
+								rhs[391]++;
+							}
+						}
+						for(int v:commad)
+						{
+							if(find(commbc.begin(),commbc.end(),v)!=commbc.end())
+							{
+								rhs[396]++;
+							}
+						}
+						rhs[396]--;
+						}
+						else if((adjacent(d,a))&&(adjacent(d,b))&&(!adjacent(d,c))&&(!adjacent(a,b))&&(adjacent(a,c))&&(adjacent(b,c)))  //p69
+						{
+							rhs[369]+=(common3[TRIPLE(x,a,b)]-2+common3[TRIPLE(x,c,d)]-2);
+						}
+						else if((adjacent(d,a))&&(adjacent(d,b))&&(adjacent(d,c))&&(!adjacent(a,b))&&(adjacent(a,c))&&(adjacent(b,c)))  //p71
+						{
+							rhs[371]+=(common3[TRIPLE(x,c,d)]-2);
+							vector<int> commxb;
+						for(int nx2=0,nb2=0;nx2<deg[x]&&nb2<deg[b];)
+						{
+							if(adj[x][nx2]==adj[b][nb2])
+							{
+                                commxb.push_back(adj[x][nx2]);
+								nx2++;
+								nb2++;
+							}
+							else if(adj[x][nx2]<adj[b][nb2])
+							nx2++;
+							else
+							nb2++;
+						}
+							vector<int> commac;
+						for(int na2=0,nc2=0;na2<deg[a]&&nc2<deg[c];)
+						{
+							if(adj[a][na2]==adj[c][nc2])
+							{
+                                commac.push_back(adj[a][na2]);
+								na2++;
+								nc2++;
+							}
+							else if(adj[a][na2]<adj[c][nc2])
+							na2++;
+							else
+							nc2++;
+						}
+						vector<int> commad;
+						for(int na2=0,nd2=0;na2<deg[a]&&nd2<deg[d];)
+						{
+							if(adj[a][na2]==adj[d][nd2])
+							{
+                                commad.push_back(adj[a][na2]);
+								na2++;
+								nd2++;
+							}
+							else if(adj[a][na2]<adj[d][nd2])
+							na2++;
+							else
+							nd2++;
+						}
+							for(int v:commxb)
+						{
+							if(find(commac.begin(),commac.end(),v)!=commac.end())
+							{
+								rhs[403]++;
+							}
+							if(find(commad.begin(),commad.end(),v)!=commad.end())
+							{
+								rhs[403]++;
+							}
+						}
+						rhs[403]-=2;
+						}
+					}
+				}
+			}
 			for(int na1=0;na1<deg[a];na1++)
 			{
 				int b=adj[a][na1];
 				if(b==x) continue;
+				for(int na4=0;na4<deg[a];na4++)
+				{
+					int c=adj[a][na4];
+					if(c==b||c==x) continue;
+					for(int na5=0;na5<deg[a];na5++)
+					{
+						int d=adj[a][na5];
+						if(d==c||d==b||d==x) continue;
+						if((!adjacent(d,x))&&(!adjacent(d,b))&&(!adjacent(d,c))&&(!adjacent(x,c))&&(!adjacent(x,b))&&(!adjacent(b,c))) //p22
+						{
+							rhs[0]+=(deg[a]-4);
+							rhs[4]+=(deg[x]-1);
+							rhs[6]+=(tri[a][b]+tri[a][c]+tri[a][d]);
+							rhs[7]+=tri[x][a];
+							rhs[22]+=(tri[x][b]-1+tri[x][c]-1+tri[x][d]-1);
+							rhs[25]+=(common3[TRIPLE(a,b,c)]+common3[TRIPLE(a,b,d)]+common3[TRIPLE(a,c,d)]);
+							rhs[26]+=(common3[TRIPLE(x,a,b)]+common3[TRIPLE(x,a,c)]+common3[TRIPLE(x,a,d)]);
+							rhs[81]+=(common3[TRIPLE(b,c,d)]-1);
+							rhs[82]+=(common3[TRIPLE(x,b,c)]-1+common3[TRIPLE(x,b,d)]-1+common3[TRIPLE(x,c,d)]-1);
+							vector<int> commxb;
+						for(int nx2=0,nb2=0;nx2<deg[x]&&nb2<deg[b];)
+						{
+							if(adj[x][nx2]==adj[b][nb2])
+							{
+                                commxb.push_back(adj[x][nx2]);
+								nx2++;
+								nb2++;
+							}
+							else if(adj[x][nx2]<adj[b][nb2])
+							nx2++;
+							else
+							nb2++;
+						}
+						vector<int> commbc;
+						for(int nb2=0,nc2=0;nb2<deg[b]&&nc2<deg[c];)
+						{
+							if(adj[b][nb2]==adj[c][nc2])
+							{
+                                commbc.push_back(adj[b][nb2]);
+								nb2++;
+								nc2++;
+							}
+							else if(adj[b][nb2]<adj[c][nc2])
+							nb2++;
+							else
+							nc2++;
+						}
+						vector<int> commxd;
+						for(int nx2=0,nd2=0;nx2<deg[x]&&nd2<deg[d];)
+						{
+							if(adj[x][nx2]==adj[d][nd2])
+							{
+                                commxd.push_back(adj[x][nx2]);
+								nx2++;
+								nd2++;
+							}
+							else if(adj[x][nx2]<adj[d][nd2])
+							nx2++;
+							else
+							nd2++;
+						}
+						vector<int> commac;
+						for(int na2=0,nc2=0;na2<deg[a]&&nc2<deg[c];)
+						{
+							if(adj[a][na2]==adj[c][nc2])
+							{
+                                commac.push_back(adj[a][na2]);
+								na2++;
+								nc2++;
+							}
+							else if(adj[a][na2]<adj[c][nc2])
+							na2++;
+							else
+							nc2++;
+						}
+						vector<int> commad;
+						for(int na2=0,nd2=0;na2<deg[a]&&nd2<deg[d];)
+						{
+							if(adj[a][na2]==adj[d][nd2])
+							{
+                                commad.push_back(adj[a][na2]);
+								na2++;
+								nd2++;
+							}
+							else if(adj[a][na2]<adj[d][nd2])
+							na2++;
+							else
+							nd2++;
+						}
+						for(int v:commxb)
+						{
+							if(find(commac.begin(),commac.end(),v)!=commac.end())
+							{
+								rhs[86]++;
+							}
+							if(find(commad.begin(),commad.end(),v)!=commad.end())
+							{
+								rhs[86]++;
+							}
+						}
+						for(int v:commxd)
+						{
+							if(find(commac.begin(),commac.end(),v)!=commac.end())
+							{
+								rhs[86]++;
+							}
+							if(find(commbc.begin(),commbc.end(),v)!=commbc.end())
+							{
+								rhs[212]++;
+							}
+						}
+						rhs[212]--;
+						for(int v:commad)
+						{
+							if(find(commbc.begin(),commbc.end(),v)!=commbc.end())
+							{
+								rhs[85]++;
+							}
+						}
+						}
+						else if((!adjacent(d,x))&&(adjacent(d,b))&&(!adjacent(d,c))&&(!adjacent(x,c))&&(!adjacent(x,b))&&(!adjacent(b,c))) //p31
+						{
+							rhs[37]+=common3[TRIPLE(a,b,d)];
+							rhs[89]+=tri[a][c];
+						}
+						else if((!adjacent(d,x))&&(adjacent(d,b))&&(adjacent(d,c))&&(!adjacent(x,c))&&(!adjacent(x,b))&&(!adjacent(b,c))) //p39
+						{
+							rhs[43]+=(deg[d]-3);
+							rhs[102]+=(tri[a][b]-1+tri[a][c]-1);
+							rhs[133]+=(common3[TRIPLE(a,b,d)]+common3[TRIPLE(a,c,d)]);
+							rhs[160]+=(tri[b][c]-2);
+							rhs[181]+=(common3[TRIPLE(a,b,c)]-1);
+							rhs[236]+=common3[TRIPLE(x,a,d)];
+                            vector<int> commxb;
+						for(int nx2=0,nb2=0;nx2<deg[x]&&nb2<deg[b];)
+						{
+							if(adj[x][nx2]==adj[b][nb2])
+							{
+                                commxb.push_back(adj[x][nx2]);
+								nx2++;
+								nb2++;
+							}
+							else if(adj[x][nx2]<adj[b][nb2])
+							nx2++;
+							else
+							nb2++;
+						}
+						vector<int> commbd;
+						for(int nb2=0,nd2=0;nb2<deg[b]&&nd2<deg[d];)
+						{
+							if(adj[b][nb2]==adj[d][nd2])
+							{
+                                commbd.push_back(adj[b][nb2]);
+								nb2++;
+								nd2++;
+							}
+							else if(adj[b][nb2]<adj[d][nd2])
+							nb2++;
+							else
+							nd2++;
+						}
+						vector<int> commac;
+						for(int na2=0,nc2=0;na2<deg[a]&&nc2<deg[c];)
+						{
+							if(adj[a][na2]==adj[c][nc2])
+							{
+                                commac.push_back(adj[a][na2]);
+								na2++;
+								nc2++;
+							}
+							else if(adj[a][na2]<adj[c][nc2])
+							na2++;
+							else
+							nc2++;
+						}
+							for(int v:commac)
+						{
+							if(find(commbd.begin(),commbd.end(),v)!=commbd.end())
+							{
+								rhs[193]++;
+							}
+						}
+						for(int v:commxb)
+						{
+							if(find(commac.begin(),commac.end(),v)!=commac.end())
+							{
+								rhs[294]++;
+							}
+						}
+						}
+					}
+					for(int nx5=0;nx5<deg[x];nx5++)
+					{
+						int d=adj[x][nx5];
+						if(d==a) continue;
+						if((!adjacent(d,a))&&(!adjacent(d,c))&&(!adjacent(d,b))&&(!adjacent(x,b))&&(!adjacent(x,c))&&(!adjacent(b,c))) //p20
+						{
+							rhs[13]+=(deg[c]-1);
+							rhs[19]+=tri[x][a];
+							rhs[31]+=tri[x][c];
+							rhs[35]+=common3[TRIPLE(x,a,c)];
+							rhs[55]+=(tri[a][b]+tri[a][d]);
+							rhs[73]+=(common3[TRIPLE(x,a,b)]+common3[TRIPLE(x,a,d)]);
+							rhs[98]+=(common3[TRIPLE(a,b,c)]+common3[TRIPLE(a,c,d)]);
+							rhs[119]+=(common3[TRIPLE(x,b,c)]+common3[TRIPLE(x,c,d)]);
+							rhs[142]+=(tri[b][d]-1);
+							rhs[146]+=(common3[TRIPLE(x,b,d)]-1);
+							rhs[151]+=common3[TRIPLE(a,b,d)];
+                            vector<int> commxb;
+						for(int nx2=0,nb2=0;nx2<deg[x]&&nb2<deg[b];)
+						{
+							if(adj[x][nx2]==adj[b][nb2])
+							{
+                                commxb.push_back(adj[x][nx2]);
+								nx2++;
+								nb2++;
+							}
+							else if(adj[x][nx2]<adj[b][nb2])
+							nx2++;
+							else
+							nb2++;
+						}
+						vector<int> commbc;
+						for(int nb2=0,nc2=0;nb2<deg[b]&&nc2<deg[c];)
+						{
+							if(adj[b][nb2]==adj[c][nc2])
+							{
+                                commbc.push_back(adj[b][nb2]);
+								nb2++;
+								nc2++;
+							}
+							else if(adj[b][nb2]<adj[c][nc2])
+							nb2++;
+							else
+							nc2++;
+						}
+						vector<int> commxd;
+						for(int nx2=0,nd2=0;nx2<deg[x]&&nd2<deg[d];)
+						{
+							if(adj[x][nx2]==adj[d][nd2])
+							{
+                                commxd.push_back(adj[x][nx2]);
+								nx2++;
+								nd2++;
+							}
+							else if(adj[x][nx2]<adj[d][nd2])
+							nx2++;
+							else
+							nd2++;
+						}
+						vector<int> commac;
+						for(int na2=0,nc2=0;na2<deg[a]&&nc2<deg[c];)
+						{
+							if(adj[a][na2]==adj[c][nc2])
+							{
+                                commac.push_back(adj[a][na2]);
+								na2++;
+								nc2++;
+							}
+							else if(adj[a][na2]<adj[c][nc2])
+							na2++;
+							else
+							nc2++;
+						}
+						vector<int> commad;
+						for(int na2=0,nd2=0;na2<deg[a]&&nd2<deg[d];)
+						{
+							if(adj[a][na2]==adj[d][nd2])
+							{
+                                commad.push_back(adj[a][na2]);
+								na2++;
+								nd2++;
+							}
+							else if(adj[a][na2]<adj[d][nd2])
+							na2++;
+							else
+							nd2++;
+						}
+						for(int v:commxb)
+						{
+							if(find(commac.begin(),commac.end(),v)!=commac.end())
+							{
+								rhs[125]++;
+							}
+							if(find(commad.begin(),commad.end(),v)!=commad.end())
+							{
+								rhs[155]++;
+							}
+						}
+						for(int v:commxd)
+						{
+							if(find(commac.begin(),commac.end(),v)!=commac.end())
+							{
+								rhs[125]++;
+							}
+							if(find(commbc.begin(),commbc.end(),v)!=commbc.end())
+							{
+								rhs[232]++;
+							}
+						}
+						}
+						else if((adjacent(d,a))&&(!adjacent(d,c))&&(!adjacent(d,b))&&(!adjacent(x,b))&&(!adjacent(x,c))&&(!adjacent(b,c))) //p32
+						{
+							rhs[38]+=(common3[TRIPLE(x,a,d)]);
+							vector<int> commac;
+						for(int na2=0,nc2=0;na2<deg[a]&&nc2<deg[c];)
+						{
+							if(adj[a][na2]==adj[c][nc2])
+							{
+                                commac.push_back(adj[a][na2]);
+								na2++;
+								nc2++;
+							}
+							else if(adj[a][na2]<adj[c][nc2])
+							na2++;
+							else
+							nc2++;
+						}
+						vector<int> commxb;
+						for(int nx2=0,nb2=0;nx2<deg[x]&&nb2<deg[b];)
+						{
+							if(adj[x][nx2]==adj[b][nb2])
+							{
+                                commxb.push_back(adj[x][nx2]);
+								nx2++;
+								nb2++;
+							}
+							else if(adj[x][nx2]<adj[b][nb2])
+							nx2++;
+							else
+							nb2++;
+						}
+							for(int v:commxb)
+						{
+							if(find(commac.begin(),commac.end(),v)!=commac.end())
+							{
+								rhs[237]++;
+							}
+						}
+						}
+						else if((!adjacent(d,a))&&(!adjacent(d,c))&&(adjacent(d,b))&&(!adjacent(x,b))&&(!adjacent(x,c))&&(!adjacent(b,c))) //p37
+						{
+							rhs[129]+=common3[TRIPLE(a,c,d)];
+							rhs[185]+=common3[TRIPLE(x,c,d)];
+							rhs[216]+=tri[a][b];
+						}
+						else if((adjacent(d,a))&&(!adjacent(d,c))&&(adjacent(d,b))&&(!adjacent(x,b))&&(!adjacent(x,c))&&(!adjacent(b,c))) //p40
+						{
+							rhs[44]+=(deg[d]-3);
+							rhs[103]+=(tri[a][b]-1);
+							rhs[134]+=common3[TRIPLE(a,b,d)];
+							rhs[135]+=common3[TRIPLE(x,a,d)];
+							rhs[163]+=(tri[x][b]-2);
+							rhs[235]+=common3[TRIPLE(a,c,d)];
+							rhs[266]+=common3[TRIPLE(x,a,c)];
+							rhs[275]+=(common3[TRIPLE(x,c,d)]-1);
+							vector<int> commxb;
+						for(int nx2=0,nb2=0;nx2<deg[x]&&nb2<deg[b];)
+						{
+							if(adj[x][nx2]==adj[b][nb2])
+							{
+                                commxb.push_back(adj[x][nx2]);
+								nx2++;
+								nb2++;
+							}
+							else if(adj[x][nx2]<adj[b][nb2])
+							nx2++;
+							else
+							nb2++;
+						}
+						vector<int> commbc;
+						for(int nb2=0,nc2=0;nb2<deg[b]&&nc2<deg[c];)
+						{
+							if(adj[b][nb2]==adj[c][nc2])
+							{
+                                commbc.push_back(adj[b][nb2]);
+								nb2++;
+								nc2++;
+							}
+							else if(adj[b][nb2]<adj[c][nc2])
+							nb2++;
+							else
+							nc2++;
+						}
+						vector<int> commxd;
+						for(int nx2=0,nd2=0;nx2<deg[x]&&nd2<deg[d];)
+						{
+							if(adj[x][nx2]==adj[d][nd2])
+							{
+                                commxd.push_back(adj[x][nx2]);
+								nx2++;
+								nd2++;
+							}
+							else if(adj[x][nx2]<adj[d][nd2])
+							nx2++;
+							else
+							nd2++;
+						}
+						vector<int> commac;
+						for(int na2=0,nc2=0;na2<deg[a]&&nc2<deg[c];)
+						{
+							if(adj[a][na2]==adj[c][nc2])
+							{
+                                commac.push_back(adj[a][na2]);
+								na2++;
+								nc2++;
+							}
+							else if(adj[a][na2]<adj[c][nc2])
+							na2++;
+							else
+							nc2++;
+						}
+						vector<int> commad;
+						for(int na2=0,nd2=0;na2<deg[a]&&nd2<deg[d];)
+						{
+							if(adj[a][na2]==adj[d][nd2])
+							{
+                                commad.push_back(adj[a][na2]);
+								na2++;
+								nd2++;
+							}
+							else if(adj[a][na2]<adj[d][nd2])
+							na2++;
+							else
+							nd2++;
+						}
+						for(int v:commxb)
+						{
+							if(find(commac.begin(),commac.end(),v)!=commac.end())
+							{
+								rhs[295]++;
+							}
+							if(find(commad.begin(),commad.end(),v)!=commad.end())
+							{
+								rhs[194]++;
+							}
+						}
+						for(int v:commxd)
+						{
+							if(find(commac.begin(),commac.end(),v)!=commac.end())
+							{
+								rhs[280]++;
+							}
+						}
+						for(int v:commad)
+						{
+							if(find(commbc.begin(),commbc.end(),v)!=commbc.end())
+							{
+								rhs[279]++;
+							}
+						}
+						}
+						else if((!adjacent(d,a))&&(adjacent(d,c))&&(adjacent(d,b))&&(!adjacent(x,b))&&(!adjacent(x,c))&&(!adjacent(b,c))) //p49
+						{
+							rhs[240]+=(common3[TRIPLE(a,b,d)]+common3[TRIPLE(a,c,d)]);
+							rhs[241]+=common3[TRIPLE(x,a,d)];
+							rhs[283]+=(tri[b][c]-2);
+							rhs[284]+=(tri[x][b]-2+tri[x][c]-2);
+							rhs[289]+=(common3[TRIPLE(a,b,c)]+common3[TRIPLE(b,c,d)]);
+							rhs[290]+=(common3[TRIPLE(x,a,b)]+common3[TRIPLE(x,a,c)]+common3[TRIPLE(x,b,d)]+common3[TRIPLE(x,c,d)]);
+							rhs[363]+=(common3[TRIPLE(x,b,c)]-2);
+							vector<int> commxb;
+						for(int nx2=0,nb2=0;nx2<deg[x]&&nb2<deg[b];)
+						{
+							if(adj[x][nx2]==adj[b][nb2])
+							{
+                                commxb.push_back(adj[x][nx2]);
+								nx2++;
+								nb2++;
+							}
+							else if(adj[x][nx2]<adj[b][nb2])
+							nx2++;
+							else
+							nb2++;
+						}
+						vector<int> commbc;
+						for(int nb2=0,nc2=0;nb2<deg[b]&&nc2<deg[c];)
+						{
+							if(adj[b][nb2]==adj[c][nc2])
+							{
+                                commbc.push_back(adj[b][nb2]);
+								nb2++;
+								nc2++;
+							}
+							else if(adj[b][nb2]<adj[c][nc2])
+							nb2++;
+							else
+							nc2++;
+						}
+						vector<int> commxd;
+						for(int nx2=0,nd2=0;nx2<deg[x]&&nd2<deg[d];)
+						{
+							if(adj[x][nx2]==adj[d][nd2])
+							{
+                                commxd.push_back(adj[x][nx2]);
+								nx2++;
+								nd2++;
+							}
+							else if(adj[x][nx2]<adj[d][nd2])
+							nx2++;
+							else
+							nd2++;
+						}
+						vector<int> commac;
+						for(int na2=0,nc2=0;na2<deg[a]&&nc2<deg[c];)
+						{
+							if(adj[a][na2]==adj[c][nc2])
+							{
+                                commac.push_back(adj[a][na2]);
+								na2++;
+								nc2++;
+							}
+							else if(adj[a][na2]<adj[c][nc2])
+							na2++;
+							else
+							nc2++;
+						}
+						vector<int> commad;
+						for(int na2=0,nd2=0;na2<deg[a]&&nd2<deg[d];)
+						{
+							if(adj[a][na2]==adj[d][nd2])
+							{
+                                commad.push_back(adj[a][na2]);
+								na2++;
+								nd2++;
+							}
+							else if(adj[a][na2]<adj[d][nd2])
+							na2++;
+							else
+							nd2++;
+						}
+						for(int v:commxb)
+						{
+							if(find(commac.begin(),commac.end(),v)!=commac.end())
+							{
+								rhs[364]++;
+							}
+							if(find(commad.begin(),commad.end(),v)!=commad.end())
+							{
+								rhs[300]++;
+							}
+						}
+						for(int v:commxd)
+						{
+							if(find(commac.begin(),commac.end(),v)!=commac.end())
+							{
+								rhs[300]++;
+							}
+							if(find(commbc.begin(),commbc.end(),v)!=commbc.end())
+							{
+								rhs[364]++;
+							}
+						}
+						for(int v:commad)
+						{
+							if(find(commbc.begin(),commbc.end(),v)!=commbc.end())
+							{
+								rhs[299]++;
+							}
+						}
+						}
+						else if((adjacent(d,a))&&(adjacent(d,c))&&(adjacent(d,b))&&(!adjacent(x,b))&&(!adjacent(x,c))&&(!adjacent(b,c))) //p54
+						{
+							rhs[214]+=(tri[a][d]-3);
+						}
+					}
+				}
 				for(int nx4=0;nx4<deg[x];nx4++)
 				{
 					int c=adj[x][nx4];
 					if(c==a) continue;
+					for(int na7=0;na7<deg[a];na7++)
+					{
+						int d=adj[a][na7];
+						if(d==b||d==x) continue;
+						if(adjacent(b,d)&&(!adjacent(c,a))&&(!adjacent(c,d))&&(!adjacent(c,b))&&(!adjacent(x,b))&&(!adjacent(x,d))) //p28
+						{
+							rhs[187]+=(common3[TRIPLE(x,b,d)]-1);
+							rhs[200]+=common3[TRIPLE(a,b,d)];
+						}
+					}
 					for(int nc4=0;nc4<deg[c];nc4++)
 					{
 						int d=adj[c][nc4];
@@ -2034,9 +3168,9 @@ void countnode6orbits()
 								rhs[337]++;
 							}
 						}
-						for(int v:commcd)
+						for(int v:commbd)
 						{
-							if(find(commxb.begin(),commxb.end(),v)!=commxb.end())
+							if(find(commxc.begin(),commxc.end(),v)!=commxc.end())
 							{
 								rhs[372]++;
 							}
